@@ -1,0 +1,1 @@
+!function(){"use strict";!function(){const e=document.querySelector("loader");window.addEventListener("load",(()=>{setTimeout((()=>{e.classList.add("loader-wrapper--hidden")}),1e3)}))}()}();
