@@ -49,26 +49,117 @@
 
     <section class="section-table">
       <div class="container section-table__container">
-        <table class="section-table__table">
+        <h1 class="section-table__title">
+          Клиенты
+        </h1>
+        <table class="section-table__table" id="table">
           <tr class="section-table__table-tr">
-            <th class="section-table__table-th">Company</th>
-            <th class="section-table__table-th">Contact</th>
-            <th class="section-table__table-th">Country</th>
-            <th class="section-table__table-th">Country</th>
-            <th class="section-table__table-th">Country</th>
-            <th class="section-table__table-th">Country</th>
+            <th class="section-table__table-th">
+              <button class="section-table__table-th_id">
+                ID
+                <svg
+                  width="8"
+                  height="8"
+                  viewBox="0 0 8 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.49691e-07 4L0.705 4.705L3.5 1.915L3.5 8L4.5 8L4.5 1.915L7.29 4.71L8 4L4 -3.49691e-07L3.49691e-07 4Z"
+                    fill="#9873FF"
+                  />
+                </svg>
+              </button>
+            </th>
+            <th class="section-table__table-th">
+              <button class="section-table__fio-button section-table__text">
+                Фамилия Имя Отчество
+                <svg
+                  width="8"
+                  height="8"
+                  viewBox="0 0 8 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 4L7.295 3.295L4.5 6.085L4.5 0L3.5 0L3.5 6.085L0.71 3.29L0 4L4 8L8 4Z"
+                    fill="#9873FF"
+                  />
+                </svg>
+                <span class="section-table__fio-span">А-Я</span>
+              </button>
+            </th>
+            <th class="section-table__table-th">
+              <button class="section-table__date section-table__text">
+                Дата и время создания
+                <svg
+                  width="8"
+                  height="8"
+                  viewBox="0 0 8 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 4L7.295 3.295L4.5 6.085L4.5 0L3.5 0L3.5 6.085L0.71 3.29L0 4L4 8L8 4Z"
+                    fill="#9873FF"
+                  />
+                </svg>
+              </button>
+            </th>
+            <th class="section-table__table-th">
+              <button class="section-table__last-update section-table__text">
+                Последние изменения
+                <svg
+                  width="8"
+                  height="8"
+                  viewBox="0 0 8 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 4L7.295 3.295L4.5 6.085L4.5 0L3.5 0L3.5 6.085L0.71 3.29L0 4L4 8L8 4Z"
+                    fill="#9873FF"
+                  />
+                </svg>
+              </button>
+            </th>
+            <th class="section-table__table-th">
+              <p class="section-table__text">Контакты</p>
+            </th>
+            <th class="section-table__table-th">
+              <p class="section-table__text">Действия</p>
+            </th>
           </tr>
-          <tr class="section-table__table-tr">
-            <td class="section-table__table-td">Alfreds Futterkiste</td>
+          <tr class="section-table__table-tr section-table__table-tr_content" id="tableContent">
+            <td class="section-table__table-td">
+              <p class="section-table__table-td_id section-table__text"> 123455 </p>
+            </td>
+            <td class="section-table__table-td">
+              <p class="section-table__text_black">Скворцов Денис Юрьевич</p>
+            </td>
+            <td class="section-table__table-td">
+              <p class="section-table__text_black">21.02.2021</p>
+              <p class="section-table__table-td_id section-table__text"> 12:41 </p>
+            </td>
+            <td class="section-table__table-td">
+              <p class="section-table__text_black">21.02.2021</p>
+              <p class="section-table__table-td_id section-table__text"> 14:50 </p>
+            </td>
             <td class="section-table__table-td">Maria Anders</td>
-            <td class="section-table__table-td">Maria Anders</td>
-            <td class="section-table__table-td">Maria Anders</td>
-            <td class="section-table__table-td">Maria Anders</td>
-            <td class="section-table__table-td">Germany</td>
+            <td class="section-table__table-td">
+              <div>
+                <button class="section-table__table-edit section-table__table-button">
+                  Изменить
+                </button>
+              </div>
+              <button class="section-table__table-delete section-table__table-button">
+                Удалить
+              </button>
+            </td>
           </tr>
         </table>
       </div>
     </section>
-    <script src="./js/index.bundle.js"></script>
+    <script src="./js/index.js"></script>
   </body>
 </html>
