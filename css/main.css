@@ -53,7 +53,6 @@ body {
   background-color: var(--body-color);
 }
 
-
 /* Container */
 .container {
   padding: 0 var(--container-padding);
@@ -156,7 +155,6 @@ body {
   }
 }
 
-
 /* Section-table */
 .section-table__container {
   padding-top: 40px;
@@ -172,7 +170,6 @@ body {
   border-spacing: 0 1px;
 
 }
-
 .section-table__table-th {
   padding-left: 20px;
   padding-bottom: 5px;
@@ -195,55 +192,45 @@ body {
 .section-table__fio-span {
   color: var(--firm-color);
 }
-
 .section-table__table-button {
   padding-left: 16px;
   background-position: left;
   background-repeat: no-repeat;
 }
-
 .section-table__table-edit {
   margin-bottom: 5px;
   background-image: url(../img/icons/edit.svg);
 }
-
 .section-table__table-delete {
   background-image: url(../img/icons/cancel.svg);
 }
-
 .section-table__table-td {
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: var(--white-color);
 }
-
 .section-table__contact-list {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 7px;
   align-items: center;
 }
-
 .section-table__contact-item {
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
   background-size: auto 100%;
 }
-
 .section-table__contact-item_vk {
   background-image: url(../img/icons/vk.svg);
 }
-
 .section-table__contact-item_fb {
   background-image: url(../img/icons/fb.svg);
 }
-
 .section-table__contact-item_mail {
   background-image: url(../img/icons/mail.svg);
 }
-
 .section-table__contact-item_phone {
   background-image: url(../img/icons/phone.svg);
 }
