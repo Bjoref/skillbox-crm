@@ -1,6 +1,7 @@
 import { fillTable } from "./modules/fillTable.js";
 import { clearTable } from "./modules/clearTable.js";
 import { tooltipsInit } from "./modules/tooltips.js";
+import { modalEvents } from "./modules/modal.js";
 
 const postData = async (url = "", data = {}) => {
   const response = await fetch(url, {
@@ -61,3 +62,4 @@ fetch("http://localhost:3000/api/clients")
   });
 
 tooltipsInit();
+modalEvents();

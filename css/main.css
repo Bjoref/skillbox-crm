@@ -156,6 +156,10 @@ body {
 }
 
 /* Section-table */
+.section-table {
+  margin-bottom: 40px;
+}
+
 .section-table__container {
   padding-top: 40px;
 }
@@ -282,4 +286,61 @@ body {
   pointer-events: none;
   border: 6px solid transparent; 
   border-bottom: 6px solid var(--black-color);
+}
+
+.button-group {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.button-group__button {
+  width: 216px;
+  height: 44px;
+  padding-left: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--firm-color);
+  border: 2px solid var(--firm-color);
+  background-image: url(../img/icons/add-user_firm.svg);
+  background-repeat: no-repeat;
+  background-position: 25px;
+}
+
+.background {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+  background-color: rgba(51, 51, 51, 0.8);
+}
+
+.modal {
+  display: none;
+  width: 450px;
+  height: 400px;
+  background: white;
+  color: white;
+  border-radius: 1em;
+  padding: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.hide-overflow-x {
+  overflow-x: hidden;
+}
+
+.d-block {
+  display: block;
 }
