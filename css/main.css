@@ -219,18 +219,54 @@ body {
 .section-table__contact-item {
   width: 16px;
   height: 16px;
+
+}
+.section-table__contact-button {
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  border: none;
   background-repeat: no-repeat;
   background-size: auto 100%;
 }
-.section-table__contact-item_vk {
+
+.section-table__contact-button_vk {
   background-image: url(../img/icons/vk.svg);
 }
-.section-table__contact-item_fb {
+.section-table__contact-button_fb {
   background-image: url(../img/icons/fb.svg);
 }
-.section-table__contact-item_mail {
+.section-table__contact-button_mail {
   background-image: url(../img/icons/mail.svg);
 }
-.section-table__contact-item_phone {
+.section-table__contact-button_phone {
   background-image: url(../img/icons/phone.svg);
+}
+.section-table__contact-button_default {
+  background-image: url(../img/icons/default.svg);
+}
+
+.tooltip {
+  position: fixed;
+  padding: 7px 14px;
+  font-size: 12px;
+  height: 31px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--white-color);
+  background: var(--black-color);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  top: 31px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  pointer-events: none;
+	border: 6px solid transparent; 
+  border-top: 6px solid  var(--black-color);
 }

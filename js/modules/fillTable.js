@@ -15,7 +15,6 @@ const li = document.createElement("li");
 li.classList.add("section-table__contact-item");
 
 const button = document.createElement("button");
-button.classList.add("section-table__table-button");
 
 const divButton = document.createElement("div");
 
@@ -76,22 +75,30 @@ export const fillTable = (user) => {
   //Contacts
   const tdContactsClone = td.cloneNode(true);
   const ulContactsClone = ul.cloneNode(true);
-
+  
   user.contacts.forEach((contact) => {
     const liContactsClone = li.cloneNode(true);
+    const buttonContactsClone = button.cloneNode(true);
+    buttonContactsClone.classList.add("section-table__contact-button");
 
     if (contact.type === "Телефон") {
-      liContactsClone.classList.add("section-table__contact-item_phone");
+      buttonContactsClone.classList.add("section-table__contact-button_phone");
+      buttonContactsClone.setAttribute('data-tooltip', `Телефон: ${contact.value}`);
     } else if (contact.type === "Email") {
-      liContactsClone.classList.add("section-table__contact-item_mail");
+      buttonContactsClone.classList.add("section-table__contact-button_mail");
+      buttonContactsClone.setAttribute('data-tooltip', `Почта: ${contact.value}`);
     } else if (contact.type === "Facebook") {
-      liContactsClone.classList.add("section-table__contact-item_fb");
+      buttonContactsClone.classList.add("section-table__contact-button_fb");
+      buttonContactsClone.setAttribute('data-tooltip', `Facebook: ${contact.value}`);
     } else if (contact.type === "Vkontakte") {
-      liContactsClone.classList.add("section-table__contact-item_vk");
+      buttonContactsClone.classList.add("section-table__contact-button_vk");
+      buttonContactsClone.setAttribute('data-tooltip', `Вконтакте: ${contact.value}`);
     } else {
-      liContactsClone.classList.add("section-table__contact-item_default");
+      buttonContactsClone.setAttribute('data-tooltip', `Контакт: ${contact.value}`);
+      buttonContactsClone.classList.add("section-table__contact-button_default");
     }
 
+    liContactsClone.append(buttonContactsClone);
     ulContactsClone.append(liContactsClone);
   });
 
@@ -99,11 +106,13 @@ export const fillTable = (user) => {
   const tdActionsClone = td.cloneNode(true);
   const divActionsClone = divButton.cloneNode(true);
   const editButton = button.cloneNode(true);
+  editButton.classList.add("section-table__table-button");
   editButton.textContent = "Изменить";
   editButton.classList.add("section-table__table-edit");
   divActionsClone.append(editButton);
   const deleteButton = button.cloneNode(true);
   deleteButton.textContent = "Удалить";
+  deleteButton.classList.add("section-table__table-button");
   deleteButton.classList.add("section-table__table-delete");
 
   tdActionsClone.append(divActionsClone);
