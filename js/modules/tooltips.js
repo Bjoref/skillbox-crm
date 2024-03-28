@@ -21,6 +21,7 @@ export const tooltipsInit = () => {
     let top = coords.top - tooltipElem.offsetHeight - 5;
     if (top < 0) {
       top = coords.top + target.offsetHeight + 5;
+      tooltipElem.classList.add('tooltip_top')
     }
 
     tooltipElem.style.left = left + "px";
