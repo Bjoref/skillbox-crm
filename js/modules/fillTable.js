@@ -1,3 +1,5 @@
+import { showModal } from "./modal.js";
+
 const table = document.querySelector("#table"); //Выбираем таблицу
 
 const tr = document.createElement("tr");
@@ -108,6 +110,8 @@ export const fillTable = (user) => {
   editButton.classList.add("section-table__table-button");
   editButton.textContent = "Изменить";
   editButton.classList.add("section-table__table-edit");
+  editButton.setAttribute('data-id', user.id)
+  editButton.addEventListener('click', showModal)
   divActionsClone.append(editButton);
   const deleteButton = button.cloneNode(true);
   deleteButton.textContent = "Удалить";

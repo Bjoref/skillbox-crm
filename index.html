@@ -30,7 +30,23 @@
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
-    <div class="background" id="background"></div>
+    <div class="background" id="background">
+      <div class="modal" id="modal">
+        <h2 class="modal__title"></h2>
+        <p class="modal__id"></p>
+
+        <form class="modal__form">
+          <label class="modal__label" for="surname">Фамилия</label>
+          <input class="modal__input" type="text" id="surname">
+
+          <label class="modal__label" for="name">Имя</label>
+          <input class="modal__input" type="text" id="name">
+
+          <label class="modal__label" for="patronomic">Отчество</label>
+          <input class="modal__input" type="text" id="patronomic">
+        </form>
+      </div>
+    </div>
     <header class="header">
       <div class="container header__container">
         <a href="#!" class="header__logo-link">
@@ -173,7 +189,6 @@
       <button class="button-group__button" id="addClient">Добавить клиента</button>
     </div>
 
-    <div class="modal" id="modal"></div>
     <script src="./js/index.js" type="module" ></script>
   </body>
 </html>
