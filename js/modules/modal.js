@@ -47,7 +47,7 @@ function getUserData(url) {
       }
     })
     .then((json) => {
-      const customer_name = json;
-      return customer_name;
+      const user = json;
+      return user;
     });
 }
