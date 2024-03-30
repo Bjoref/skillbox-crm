@@ -76,7 +76,7 @@ export const fillTable = (user) => {
   //Contacts
   const tdContactsClone = td.cloneNode(true);
   const ulContactsClone = ul.cloneNode(true);
-  
+
   user.contacts.forEach((contact) => {
     const liContactsClone = li.cloneNode(true);
     const buttonContactsClone = button.cloneNode(true);
