@@ -15,6 +15,7 @@ export const showModal = (e) => {
     userId = e.target.getAttribute("data-id");
     getUserData(`http://localhost:3000/api/clients/${userId}`).then(
       (editUser) => {
+        document.querySelector('.modal__id').textContent = editUser.id
         document.getElementById("surname").placeholder = editUser.surname;
         document.getElementById("name").placeholder = editUser.name;
         document.getElementById("patronomic").placeholder = editUser.lastName;
@@ -36,14 +37,6 @@ const hideModal = (e) => {
   }
 };
 
-const checkUser = async (url) => {
-  let userData = await fetch(url);
-  //use string literals
-  let userJson = await userData.json();
-  return userJson;
-};
-
-// Gets the fullname of the customer from an id.
 function getUserData(url) {
   return fetch(url)
     .then((response) => {
