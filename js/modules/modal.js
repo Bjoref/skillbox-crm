@@ -1,3 +1,5 @@
+import { showDeleteModal } from "./deleteUser.js";
+
 export const modalEvents = () => {
   showButton.addEventListener("click", showModal);
   background.addEventListener("click", hideModal);
@@ -15,13 +17,16 @@ export const showModal = (e) => {
     userId = e.target.getAttribute("data-id");
     getUserData(`http://localhost:3000/api/clients/${userId}`).then(
       (editUser) => {
-        console.log(editUser.surname)
         const submitButton = document.querySelector(".modal__submit-button");
         editForm.setAttribute('data-id', userId)
         document.querySelector(".modal__id").textContent = `ID: ${editUser.id}`;
         submitButton.textContent = "Сохранить";
         editForm.addEventListener("submit", changeUser);
-        createModalContent()
+        deleteButton.addEventListener('click', () => {
+          showDeleteModal(editUser.id, modal, modalDelete)
+        });
+        cancelDeleteButton.addEventListener('click', hideModal)
+        createModalContent();
 
         document.getElementById("surname").setAttribute("value", editUser.surname);
         document.getElementById("name").setAttribute("value", editUser.name);
@@ -34,16 +39,28 @@ export const showModal = (e) => {
 const showButton = document.getElementById("addClient");
 const background = document.getElementById("background");
 const modal = document.getElementById("modal");
+const modalDelete = document.getElementById("modalDelete");
 const editForm = document.querySelector(".modal__form");
 const modalTitle = document.querySelector(".modal__title");
+const deleteButton = document.querySelector('.modal__delete-button');
+const cancelDeleteButton = document.querySelector('.modal-delete__button-cancel');
+
 
 let userId;
 const hideModal = (e) => {
   if (e.target.classList.contains("background")) {
-    document.querySelector("body").classList.remove("hide-overflow-x");
-    background.classList.remove("d-block");
-    modal.classList.remove("d-block");
-    removeModalContent()
+    if(modalDelete.classList.contains('d-block')) {
+      modalDelete.classList.remove('d-block')
+      modal.classList.add('d-block')
+    } else {
+      document.querySelector("body").classList.remove("hide-overflow-x");
+      background.classList.remove("d-block");
+      modal.classList.remove("d-block");
+      removeModalContent()
+    }
+  } else if(e.target.classList.contains("modal-delete__button-cancel")) {
+    modalDelete.classList.remove('d-block')
+    modal.classList.add('d-block')
   }
 };
 
@@ -64,7 +81,6 @@ function getUserData(url) {
 
 const changeUser = (e) => {
   e.preventDefault();
-  console.log(e.target)
   let obj = {};
   obj.id = e.target.getAttribute('data-id');
   obj.surname = document.getElementById('surname').value
