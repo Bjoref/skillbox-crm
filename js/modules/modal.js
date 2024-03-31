@@ -32,6 +32,10 @@ export const showModal = (e) => {
         cancelDeleteButton.addEventListener("click", hideModal);
         createModalContent();
 
+        editUser.contacts.forEach((contact) => {
+          addNewSelectInput(contact);
+        });
+
         document
           .getElementById("surname")
           .setAttribute("value", editUser.surname);
@@ -123,12 +127,26 @@ const changeUser = (e) => {
   obj.surname = document.getElementById("surname").value;
   obj.name = document.getElementById("name").value;
   obj.lastName = document.getElementById("patronymic").value;
+  obj.updatedAt = new Date();
 
-  console.log(obj);
-  // fetch(url, {
-  //   method: "PATCH",
-  //   body: JSON.stringify(obj),
-  // });
+  let contactsArray = [];
+
+  document.querySelectorAll(".modal__select-input").forEach((option) => {
+    contactsArray.push({
+      type: option.getAttribute("data-type"),
+      value: option.value,
+    });
+  });
+
+  obj.contacts = contactsArray;
+
+  fetch(
+    `http://localhost:3000/api/clients/${e.target.getAttribute("data-id")}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(obj),
+    }
+  );
 };
 
 const createModalContent = (addNew) => {
@@ -137,11 +155,14 @@ const createModalContent = (addNew) => {
   const label = document.createElement("label");
   label.classList.add("modal__label");
 
-  addSelectInputButton.addEventListener("click", addNewSelectInput);
+  addSelectInputButton.addEventListener("click", () => {
+    addNewSelectInput(null);
+  });
 
   const inputSurname = input.cloneNode(true);
   inputSurname.setAttribute("id", "surname");
   inputSurname.setAttribute("name", "surname");
+  inputSurname.setAttribute("autocomplete", "family-name");
 
   const labelSurname = label.cloneNode(true);
   labelSurname.setAttribute("for", "surname");
@@ -150,6 +171,7 @@ const createModalContent = (addNew) => {
   const inputName = input.cloneNode(true);
   inputName.setAttribute("id", "name");
   inputName.setAttribute("name", "name");
+  inputName.setAttribute("autocomplete", "given-name");
 
   const labelName = label.cloneNode(true);
   labelName.setAttribute("for", "name");
@@ -158,6 +180,7 @@ const createModalContent = (addNew) => {
   const inputPatronymic = input.cloneNode(true);
   inputPatronymic.setAttribute("id", "patronymic");
   inputPatronymic.setAttribute("name", "patronymic");
+  inputPatronymic.setAttribute("autocomplete", "off");
 
   const labelPatronymic = label.cloneNode(true);
   labelPatronymic.setAttribute("for", "patronymic");
@@ -204,30 +227,48 @@ const closeModal = () => {
   removeModalContent();
 };
 
-const addNewSelectInput = (e) => {
+const addNewSelectInput = (data = null) => {
   const div = document.createElement("div");
-  div.classList.add('modal__form-select-content')
+  div.classList.add("modal__form-select-content");
   const select = document.createElement("select");
   const input = document.createElement("input");
   input.setAttribute("type", "text");
   input.classList.add("modal__select-input");
-  input.placeholder = "Введите запрос";
+  input.placeholder = "Введите данные контакта";
   select.classList.add("modal__select");
 
   const optionHtml = document.createElement("option");
 
   addNewOptions.forEach((option) => {
     let optionHtmlClone = optionHtml.cloneNode(true);
-    optionHtmlClone.value = option.value;
-    optionHtmlClone.innerText = option.value;
+    if (data && data.type === option.value) {
+      optionHtmlClone.setAttribute("selected", true);
+      optionHtmlClone.value = data.type;
+      optionHtmlClone.innerText = data.type;
+    } else {
+      select.setAttribute("name", option.value);
+      optionHtmlClone.value = option.value;
+      optionHtmlClone.innerText = option.value;
+    }
     optionHtmlClone.setAttribute("class", option.class);
 
     select.append(optionHtmlClone);
   });
   let inputClone = input.cloneNode(true);
+  if (data) {
+    inputClone.value = data.value;
+    inputClone.setAttribute("data-type", data.type);
+    inputClone.setAttribute("autocomplete", "off");
+    select.setAttribute("autocomplete", "off");
+    select.setAttribute("name", data.type);
+  }
+  inputClone.setAttribute("name", "contact_input");
 
   div.append(select);
   div.append(inputClone);
 
-  editForm.insertBefore(div, e.target);
+  editForm.insertBefore(
+    div,
+    document.querySelector(".modal__add-contact-button")
+  );
 };

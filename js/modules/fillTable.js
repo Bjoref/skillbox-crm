@@ -43,38 +43,26 @@ export const fillTable = (user) => {
   const tdCreatedClone = td.cloneNode(true);
   const pDateCreatedClone = p.cloneNode(true);
   pDateCreatedClone.classList.add("section-table__text_black");
-  pDateCreatedClone.innerHTML = new Date(user.createdAt).toLocaleDateString(
-    "ru-RU",
-    { timeZone: "Europe/Moscow" }
-  );
+  pDateCreatedClone.innerHTML = new Date(user.createdAt).toLocaleDateString();
   const pTimeCreatedClone = p.cloneNode(true);
   pTimeCreatedClone.classList.add(
     "section-table__table-td_id",
     "section-table__text"
   );
-  pTimeCreatedClone.innerHTML = new Date(user.createdAt).toLocaleTimeString(
-    "ru-RU",
-    { timeZone: "Europe/Moscow" }
-  );
+  pTimeCreatedClone.innerHTML = new Date(user.createdAt).toLocaleTimeString();
 
   //Updated
   const tdUpdatedClone = td.cloneNode(true);
   const pDateUpdatedClone = p.cloneNode(true);
   pDateUpdatedClone.classList.add("section-table__text_black");
-  pDateUpdatedClone.innerHTML = new Date(user.updatedAt).toLocaleDateString(
-    "ru-RU",
-    { timeZone: "Europe/Moscow" }
-  );
+  pDateUpdatedClone.innerHTML = new Date(user.updatedAt).toLocaleDateString();
 
   const pTimeUpdatedClone = p.cloneNode(true);
   pTimeUpdatedClone.classList.add(
     "section-table__table-td_id",
     "section-table__text"
   );
-  pTimeUpdatedClone.innerHTML = new Date(user.updatedAt).toLocaleTimeString(
-    "ru-RU",
-    { timeZone: "Europe/Moscow" }
-  );
+  pTimeUpdatedClone.innerHTML = new Date(user.updatedAt).toLocaleTimeString();
 
   //Contacts
   const tdContactsClone = td.cloneNode(true);
