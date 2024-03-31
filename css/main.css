@@ -422,3 +422,26 @@ body {
   font-size: 16px;
   background-color: var(--firm-color);
 }
+
+.modal__select {
+  font-size: 16px;
+  color: var(--black-color);
+}
+
+.modal__option_hide {
+  display: none;
+}
+
+.modal__select-input {
+  font-size: 16px;
+  color: var(--black-color);
+}
+
+.modal__add-contact-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  font-size: 16px;
+  color: var(--black-color);
+}

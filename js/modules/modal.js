@@ -11,15 +11,17 @@ export const showModal = (e) => {
   document.querySelector("body").classList.add("hide-overflow-x");
   background.classList.add("d-block");
   modal.classList.add("d-block");
+  const submitButton = document.querySelector(".modal__submit-button");
 
   if (e.target.getAttribute("id") == "addClient") {
     modalTitle.innerText = "Добавить клиента";
+    submitButton.textContent = "Добавить";
+    createModalContent();
   } else if (e.target.classList.contains("section-table__table-edit")) {
     modalTitle.innerText = "Изменить клиента";
     userId = e.target.getAttribute("data-id");
     getUserData(`http://localhost:3000/api/clients/${userId}`).then(
       (editUser) => {
-        const submitButton = document.querySelector(".modal__submit-button");
         editForm.setAttribute("data-id", userId);
         document.querySelector(".modal__id").textContent = `ID: ${editUser.id}`;
         submitButton.textContent = "Сохранить";
@@ -52,7 +54,31 @@ const deleteButton = document.querySelector(".modal__delete-button");
 const cancelDeleteButton = document.querySelector(
   ".modal-delete__button-cancel"
 );
-
+const addSelectInputButton = document.querySelector(
+  ".modal__add-contact-button"
+);
+const addNewOptions = [
+  {
+    value: "Телефон",
+    class: "modal__option",
+  },
+  {
+    value: "Доп. Телефон",
+    class: "modal__option modal__option_hide",
+  },
+  {
+    value: "Email",
+    class: "modal__option",
+  },
+  {
+    value: "Vk",
+    class: "modal__option",
+  },
+  {
+    value: "Facebook",
+    class: "modal__option",
+  },
+];
 let userId;
 const hideModal = (e) => {
   if (e.target.classList.contains("background")) {
@@ -105,11 +131,13 @@ const changeUser = (e) => {
   // });
 };
 
-const createModalContent = () => {
+const createModalContent = (addNew) => {
   const input = document.createElement("input");
   input.classList.add("modal__input");
   const label = document.createElement("label");
   label.classList.add("modal__label");
+
+  addSelectInputButton.addEventListener("click", addNewSelectInput);
 
   const inputSurname = input.cloneNode(true);
   inputSurname.setAttribute("id", "surname");
@@ -152,6 +180,9 @@ const removeModalContent = () => {
   document.querySelectorAll(".modal__input").forEach((label) => {
     label.remove();
   });
+  document.querySelectorAll(".modal__form-select-content").forEach((div) => {
+    div.remove();
+  });
 };
 
 const removeApproveDeleteModal = () => {
@@ -171,4 +202,32 @@ const closeModal = () => {
   background.classList.remove("d-block");
   modal.classList.remove("d-block");
   removeModalContent();
+};
+
+const addNewSelectInput = (e) => {
+  const div = document.createElement("div");
+  div.classList.add('modal__form-select-content')
+  const select = document.createElement("select");
+  const input = document.createElement("input");
+  input.setAttribute("type", "text");
+  input.classList.add("modal__select-input");
+  input.placeholder = "Введите запрос";
+  select.classList.add("modal__select");
+
+  const optionHtml = document.createElement("option");
+
+  addNewOptions.forEach((option) => {
+    let optionHtmlClone = optionHtml.cloneNode(true);
+    optionHtmlClone.value = option.value;
+    optionHtmlClone.innerText = option.value;
+    optionHtmlClone.setAttribute("class", option.class);
+
+    select.append(optionHtmlClone);
+  });
+  let inputClone = input.cloneNode(true);
+
+  div.append(select);
+  div.append(inputClone);
+
+  editForm.insertBefore(div, e.target);
 };
