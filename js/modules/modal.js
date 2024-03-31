@@ -16,6 +16,8 @@ export const showModal = (e) => {
   if (e.target.getAttribute("id") == "addClient") {
     modalTitle.innerText = "Добавить клиента";
     submitButton.textContent = "Добавить";
+    editForm.addEventListener("submit", updateOrAddUser);
+    submitButton.setAttribute('data-submit', 'add')
     createModalContent();
   } else if (e.target.classList.contains("section-table__table-edit")) {
     modalTitle.innerText = "Изменить клиента";
@@ -25,7 +27,8 @@ export const showModal = (e) => {
         editForm.setAttribute("data-id", userId);
         document.querySelector(".modal__id").textContent = `ID: ${editUser.id}`;
         submitButton.textContent = "Сохранить";
-        editForm.addEventListener("submit", changeUser);
+        submitButton.setAttribute('data-submit', 'edit')
+        editForm.addEventListener("submit", updateOrAddUser);
         deleteButton.addEventListener("click", () => {
           showDeleteModal(editUser.id, modal, modalDelete);
         });
@@ -120,7 +123,8 @@ function getUserData(url) {
     });
 }
 
-const changeUser = (e) => {
+const updateOrAddUser = (e) => {
+  console.log(e)
   e.preventDefault();
   let obj = {};
   obj.id = e.target.getAttribute("data-id");
@@ -128,6 +132,9 @@ const changeUser = (e) => {
   obj.name = document.getElementById("name").value;
   obj.lastName = document.getElementById("patronymic").value;
   obj.updatedAt = new Date();
+  if(e.submitter.getAttribute('data-submit') === 'add') {
+    obj.createdAt = new Date();
+  }
 
   let contactsArray = [];
 
@@ -140,13 +147,24 @@ const changeUser = (e) => {
 
   obj.contacts = contactsArray;
 
-  fetch(
-    `http://localhost:3000/api/clients/${e.target.getAttribute("data-id")}`,
-    {
-      method: "PATCH",
+  if(e.submitter.getAttribute('data-submit') === 'edit') {
+    fetch(
+      `http://localhost:3000/api/clients/${e.target.getAttribute("data-id")}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(obj),
+      }
+    );
+  } else {
+    const response = fetch('http://localhost:3000/api/clients', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(obj),
-    }
-  );
+    });
+    return response.json();
+  }
 };
 
 const createModalContent = (addNew) => {
