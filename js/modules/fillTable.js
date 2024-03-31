@@ -1,4 +1,7 @@
 import { showModal } from "./modal.js";
+import { showDeleteModal } from "./deleteUser.js";
+import { modalDelete } from "./modal.js";
+
 
 const table = document.querySelector("#table"); //Выбираем таблицу
 
@@ -84,19 +87,36 @@ export const fillTable = (user) => {
 
     if (contact.type === "Телефон") {
       buttonContactsClone.classList.add("section-table__contact-button_phone");
-      buttonContactsClone.setAttribute('data-tooltip', `Телефон: ${contact.value}`);
+      buttonContactsClone.setAttribute(
+        "data-tooltip",
+        `Телефон: ${contact.value}`
+      );
     } else if (contact.type === "Email") {
       buttonContactsClone.classList.add("section-table__contact-button_mail");
-      buttonContactsClone.setAttribute('data-tooltip', `Почта: ${contact.value}`);
+      buttonContactsClone.setAttribute(
+        "data-tooltip",
+        `Почта: ${contact.value}`
+      );
     } else if (contact.type === "Facebook") {
       buttonContactsClone.classList.add("section-table__contact-button_fb");
-      buttonContactsClone.setAttribute('data-tooltip', `Facebook: ${contact.value}`);
+      buttonContactsClone.setAttribute(
+        "data-tooltip",
+        `Facebook: ${contact.value}`
+      );
     } else if (contact.type === "Vkontakte") {
       buttonContactsClone.classList.add("section-table__contact-button_vk");
-      buttonContactsClone.setAttribute('data-tooltip', `Вконтакте: ${contact.value}`);
+      buttonContactsClone.setAttribute(
+        "data-tooltip",
+        `Вконтакте: ${contact.value}`
+      );
     } else {
-      buttonContactsClone.setAttribute('data-tooltip', `Контакт: ${contact.value}`);
-      buttonContactsClone.classList.add("section-table__contact-button_default");
+      buttonContactsClone.setAttribute(
+        "data-tooltip",
+        `Контакт: ${contact.value}`
+      );
+      buttonContactsClone.classList.add(
+        "section-table__contact-button_default"
+      );
     }
 
     liContactsClone.append(buttonContactsClone);
@@ -110,13 +130,16 @@ export const fillTable = (user) => {
   editButton.classList.add("section-table__table-button");
   editButton.textContent = "Изменить";
   editButton.classList.add("section-table__table-edit");
-  editButton.setAttribute('data-id', user.id)
-  editButton.addEventListener('click', showModal)
+  editButton.setAttribute("data-id", user.id);
+  editButton.addEventListener("click", showModal);
   divActionsClone.append(editButton);
   const deleteButton = button.cloneNode(true);
   deleteButton.textContent = "Удалить";
   deleteButton.classList.add("section-table__table-button");
   deleteButton.classList.add("section-table__table-delete");
+  deleteButton.addEventListener("click", () => {
+    showDeleteModal(user.id, undefined, modalDelete)
+  });
 
   tdActionsClone.append(divActionsClone);
   tdActionsClone.append(deleteButton);

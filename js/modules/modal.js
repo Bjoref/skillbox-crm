@@ -5,6 +5,8 @@ export const modalEvents = () => {
   background.addEventListener("click", hideModal);
 };
 
+export { background, modalDelete };
+
 export const showModal = (e) => {
   document.querySelector("body").classList.add("hide-overflow-x");
   background.classList.add("d-block");
@@ -18,21 +20,25 @@ export const showModal = (e) => {
     getUserData(`http://localhost:3000/api/clients/${userId}`).then(
       (editUser) => {
         const submitButton = document.querySelector(".modal__submit-button");
-        editForm.setAttribute('data-id', userId)
+        editForm.setAttribute("data-id", userId);
         document.querySelector(".modal__id").textContent = `ID: ${editUser.id}`;
         submitButton.textContent = "Сохранить";
         editForm.addEventListener("submit", changeUser);
-        deleteButton.addEventListener('click', () => {
-          showDeleteModal(editUser.id, modal, modalDelete)
+        deleteButton.addEventListener("click", () => {
+          showDeleteModal(editUser.id, modal, modalDelete);
         });
-        cancelDeleteButton.addEventListener('click', hideModal)
+        cancelDeleteButton.addEventListener("click", hideModal);
         createModalContent();
 
-        document.getElementById("surname").setAttribute("value", editUser.surname);
+        document
+          .getElementById("surname")
+          .setAttribute("value", editUser.surname);
         document.getElementById("name").setAttribute("value", editUser.name);
-        document.getElementById("patronymic").setAttribute("value", editUser.lastName);
+        document
+          .getElementById("patronymic")
+          .setAttribute("value", editUser.lastName);
       }
-      );
+    );
   }
 };
 
@@ -42,25 +48,30 @@ const modal = document.getElementById("modal");
 const modalDelete = document.getElementById("modalDelete");
 const editForm = document.querySelector(".modal__form");
 const modalTitle = document.querySelector(".modal__title");
-const deleteButton = document.querySelector('.modal__delete-button');
-const cancelDeleteButton = document.querySelector('.modal-delete__button-cancel');
-
+const deleteButton = document.querySelector(".modal__delete-button");
+const cancelDeleteButton = document.querySelector(
+  ".modal-delete__button-cancel"
+);
 
 let userId;
 const hideModal = (e) => {
   if (e.target.classList.contains("background")) {
-    if(modalDelete.classList.contains('d-block')) {
-      modalDelete.classList.remove('d-block')
-      modal.classList.add('d-block')
+    if (modalDelete.classList.contains("d-block")) {
+      if (modalDelete.getAttribute("data-create-in-list") === "true") {
+        removeApproveDeleteModal();
+      } else {
+        checkoutToModal();
+      }
     } else {
-      document.querySelector("body").classList.remove("hide-overflow-x");
-      background.classList.remove("d-block");
-      modal.classList.remove("d-block");
-      removeModalContent()
+      closeModal();
     }
-  } else if(e.target.classList.contains("modal-delete__button-cancel")) {
-    modalDelete.classList.remove('d-block')
-    modal.classList.add('d-block')
+  } else if (
+    e.target.classList.contains("modal-delete__button-cancel") &&
+    modalDelete.getAttribute("data-create-in-list") === "true"
+  ) {
+    removeApproveDeleteModal();
+  } else if (e.target.classList.contains("modal-delete__button-cancel")) {
+    checkoutToModal();
   }
 };
 
@@ -82,12 +93,12 @@ function getUserData(url) {
 const changeUser = (e) => {
   e.preventDefault();
   let obj = {};
-  obj.id = e.target.getAttribute('data-id');
-  obj.surname = document.getElementById('surname').value
-  obj.name = document.getElementById('name').value
-  obj.lastName = document.getElementById('patronymic').value
+  obj.id = e.target.getAttribute("data-id");
+  obj.surname = document.getElementById("surname").value;
+  obj.name = document.getElementById("name").value;
+  obj.lastName = document.getElementById("patronymic").value;
 
-  console.log(obj)
+  console.log(obj);
   // fetch(url, {
   //   method: "PATCH",
   //   body: JSON.stringify(obj),
@@ -96,49 +107,68 @@ const changeUser = (e) => {
 
 const createModalContent = () => {
   const input = document.createElement("input");
-  input.classList.add('modal__input');
+  input.classList.add("modal__input");
   const label = document.createElement("label");
-  label.classList.add('modal__label');
+  label.classList.add("modal__label");
 
   const inputSurname = input.cloneNode(true);
-  inputSurname.setAttribute('id', 'surname');
-  inputSurname.setAttribute('name', 'surname');
+  inputSurname.setAttribute("id", "surname");
+  inputSurname.setAttribute("name", "surname");
 
   const labelSurname = label.cloneNode(true);
-  labelSurname.setAttribute('for', 'surname');
-  labelSurname.textContent = 'Фамилия*';
+  labelSurname.setAttribute("for", "surname");
+  labelSurname.textContent = "Фамилия*";
 
   const inputName = input.cloneNode(true);
-  inputName.setAttribute('id', 'name');
-  inputName.setAttribute('name', 'name');
+  inputName.setAttribute("id", "name");
+  inputName.setAttribute("name", "name");
 
   const labelName = label.cloneNode(true);
-  labelName.setAttribute('for', 'name');
-  labelName.textContent = 'Имя*';
+  labelName.setAttribute("for", "name");
+  labelName.textContent = "Имя*";
 
   const inputPatronymic = input.cloneNode(true);
-  inputPatronymic.setAttribute('id', 'patronymic');
-  inputPatronymic.setAttribute('name', 'patronymic');
+  inputPatronymic.setAttribute("id", "patronymic");
+  inputPatronymic.setAttribute("name", "patronymic");
 
   const labelPatronymic = label.cloneNode(true);
-  labelPatronymic.setAttribute('for', 'patronymic');
-  labelPatronymic.textContent = 'Отчество*';
+  labelPatronymic.setAttribute("for", "patronymic");
+  labelPatronymic.textContent = "Отчество*";
 
-  editForm.prepend(inputPatronymic)
-  editForm.prepend(labelPatronymic)
+  editForm.prepend(inputPatronymic);
+  editForm.prepend(labelPatronymic);
 
-  editForm.prepend(inputName)
-  editForm.prepend(labelName)
+  editForm.prepend(inputName);
+  editForm.prepend(labelName);
 
-  editForm.prepend(inputSurname)
-  editForm.prepend(labelSurname)
-}
+  editForm.prepend(inputSurname);
+  editForm.prepend(labelSurname);
+};
 
 const removeModalContent = () => {
-  document.querySelectorAll('.modal__label').forEach((label) => {
-    label.remove()
-  })
-  document.querySelectorAll('.modal__input').forEach((label) => {
-    label.remove()
-  })
-}
+  document.querySelectorAll(".modal__label").forEach((label) => {
+    label.remove();
+  });
+  document.querySelectorAll(".modal__input").forEach((label) => {
+    label.remove();
+  });
+};
+
+const removeApproveDeleteModal = () => {
+  modalDelete.classList.remove("d-block");
+  modalDelete.removeAttribute("data-create-in-list");
+  document.querySelector("body").classList.remove("hide-overflow-x");
+  background.classList.remove("d-block");
+};
+
+const checkoutToModal = () => {
+  modalDelete.classList.remove("d-block");
+  modal.classList.add("d-block");
+};
+
+const closeModal = () => {
+  document.querySelector("body").classList.remove("hide-overflow-x");
+  background.classList.remove("d-block");
+  modal.classList.remove("d-block");
+  removeModalContent();
+};
