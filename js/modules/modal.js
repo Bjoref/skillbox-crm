@@ -17,7 +17,7 @@ export const showModal = (e) => {
     modalTitle.innerText = "Добавить клиента";
     submitButton.textContent = "Добавить";
     editForm.addEventListener("submit", updateOrAddUser);
-    submitButton.setAttribute('data-submit', 'add')
+    submitButton.setAttribute("data-submit", "add");
     createModalContent();
   } else if (e.target.classList.contains("section-table__table-edit")) {
     modalTitle.innerText = "Изменить клиента";
@@ -27,7 +27,7 @@ export const showModal = (e) => {
         editForm.setAttribute("data-id", userId);
         document.querySelector(".modal__id").textContent = `ID: ${editUser.id}`;
         submitButton.textContent = "Сохранить";
-        submitButton.setAttribute('data-submit', 'edit')
+        submitButton.setAttribute("data-submit", "edit");
         editForm.addEventListener("submit", updateOrAddUser);
         deleteButton.addEventListener("click", () => {
           showDeleteModal(editUser.id, modal, modalDelete);
@@ -124,7 +124,7 @@ function getUserData(url) {
 }
 
 const updateOrAddUser = (e) => {
-  console.log(e)
+  console.log(e);
   e.preventDefault();
   let obj = {};
   obj.id = e.target.getAttribute("data-id");
@@ -132,22 +132,29 @@ const updateOrAddUser = (e) => {
   obj.name = document.getElementById("name").value;
   obj.lastName = document.getElementById("patronymic").value;
   obj.updatedAt = new Date();
-  if(e.submitter.getAttribute('data-submit') === 'add') {
+  if (e.submitter.getAttribute("data-submit") === "add") {
     obj.createdAt = new Date();
   }
 
   let contactsArray = [];
 
   document.querySelectorAll(".modal__select-input").forEach((option) => {
-    contactsArray.push({
-      type: option.getAttribute("data-type"),
-      value: option.value,
-    });
+    if (e.submitter.getAttribute("data-submit") === "edit") {
+      contactsArray.push({
+        type: option.getAttribute("data-type"),
+        value: option.value,
+      });
+    } else {
+      contactsArray.push({
+        type: option.previousElementSibling.value,
+        value: option.value,
+      });
+    }
   });
 
   obj.contacts = contactsArray;
 
-  if(e.submitter.getAttribute('data-submit') === 'edit') {
+  if (e.submitter.getAttribute("data-submit") === "edit") {
     fetch(
       `http://localhost:3000/api/clients/${e.target.getAttribute("data-id")}`,
       {
@@ -156,7 +163,7 @@ const updateOrAddUser = (e) => {
       }
     );
   } else {
-    const response = fetch('http://localhost:3000/api/clients', {
+    const response = fetch("http://localhost:3000/api/clients", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -264,7 +271,7 @@ const addNewSelectInput = (data = null) => {
       optionHtmlClone.value = data.type;
       optionHtmlClone.innerText = data.type;
     } else {
-      select.setAttribute("name", option.value);
+      select.setAttribute("name", "select");
       optionHtmlClone.value = option.value;
       optionHtmlClone.innerText = option.value;
     }
@@ -278,7 +285,7 @@ const addNewSelectInput = (data = null) => {
     inputClone.setAttribute("data-type", data.type);
     inputClone.setAttribute("autocomplete", "off");
     select.setAttribute("autocomplete", "off");
-    select.setAttribute("name", data.type);
+    select.setAttribute("name", "select");
   }
   inputClone.setAttribute("name", "contact_input");
 
