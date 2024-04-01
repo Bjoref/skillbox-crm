@@ -180,8 +180,15 @@ body {
   text-align: left;
   font-size: 12px;
 }
-.section-table__table-th_id {
+.section-table__table-th_filter.filter-down,
+.section-table__table-th_filter.filter-up {
   color: var(--firm-color);
+}
+.section-table__svg {
+  transition: transform .2s ease-in-out;
+}
+.section-table__table-th_filter.filter-down > .section-table__svg {
+  transform: rotate(180deg);
 }
 .section-table__text {
   font-size: 12px;
