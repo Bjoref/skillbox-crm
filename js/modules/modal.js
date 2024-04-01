@@ -269,7 +269,8 @@ const addNewSelectInput = (data = null) => {
   select.classList.add("modal__select");
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("modal__select-delete-button");
-
+  deleteButton.setAttribute('type', 'button');
+  deleteButton.addEventListener('click', removeInput)
   const optionHtml = document.createElement("option");
 
   addNewOptions.forEach((option) => {
@@ -306,3 +307,7 @@ const addNewSelectInput = (data = null) => {
     document.querySelector(".modal__add-contact-button")
   );
 };
+
+const removeInput = (e) => {
+  e.target.parentNode.remove()
+}
