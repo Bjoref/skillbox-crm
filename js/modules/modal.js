@@ -20,7 +20,7 @@ export const showModal = (e) => {
     submitButton.setAttribute("data-submit", "add");
     createModalContent();
   } else if (e.target.classList.contains("section-table__table-edit")) {
-    modalTitle.innerText = "Изменить клиента";
+    modalTitle.innerText = "Изменить данные";
     userId = e.target.getAttribute("data-id");
     getUserData(`http://localhost:3000/api/clients/${userId}`).then(
       (editUser) => {
@@ -179,6 +179,9 @@ const createModalContent = (addNew) => {
   input.classList.add("modal__input");
   const label = document.createElement("label");
   label.classList.add("modal__label");
+  const span = document.createElement("span");
+  span.classList.add("modal__star");
+  span.textContent = "*";
 
   addSelectInputButton.addEventListener("click", () => {
     addNewSelectInput(null);
@@ -191,7 +194,8 @@ const createModalContent = (addNew) => {
 
   const labelSurname = label.cloneNode(true);
   labelSurname.setAttribute("for", "surname");
-  labelSurname.textContent = "Фамилия*";
+  labelSurname.textContent = "Фамилия";
+  labelSurname.append(span.cloneNode(true));
 
   const inputName = input.cloneNode(true);
   inputName.setAttribute("id", "name");
@@ -200,7 +204,8 @@ const createModalContent = (addNew) => {
 
   const labelName = label.cloneNode(true);
   labelName.setAttribute("for", "name");
-  labelName.textContent = "Имя*";
+  labelName.textContent = "Имя";
+  labelName.append(span.cloneNode(true));
 
   const inputPatronymic = input.cloneNode(true);
   inputPatronymic.setAttribute("id", "patronymic");
@@ -209,7 +214,8 @@ const createModalContent = (addNew) => {
 
   const labelPatronymic = label.cloneNode(true);
   labelPatronymic.setAttribute("for", "patronymic");
-  labelPatronymic.textContent = "Отчество*";
+  labelPatronymic.textContent = "Отчество";
+  labelPatronymic.append(span.cloneNode(true));
 
   editForm.prepend(inputPatronymic);
   editForm.prepend(labelPatronymic);
@@ -261,6 +267,8 @@ const addNewSelectInput = (data = null) => {
   input.classList.add("modal__select-input");
   input.placeholder = "Введите данные контакта";
   select.classList.add("modal__select");
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("modal__select-delete-button");
 
   const optionHtml = document.createElement("option");
 
@@ -291,6 +299,7 @@ const addNewSelectInput = (data = null) => {
 
   div.append(select);
   div.append(inputClone);
+  div.append(deleteButton);
 
   editForm.insertBefore(
     div,

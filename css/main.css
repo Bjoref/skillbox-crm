@@ -36,6 +36,7 @@
   --firm-color: #9873ff;
   --grey-color: #c8c5d1;
   --text-grey-color: #b0b0b0;
+  --select-grey-color: #E7E5EB;
   --black-color: #333333;
   --white-color: #ffffff;
   --body-color: #e6e8ec;
@@ -325,8 +326,7 @@ body {
   height: fit-content;
   background: white;
   color: white;
-  border-radius: 1em;
-  padding: 1rem;
+  padding: 30px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -345,12 +345,12 @@ body {
 
 .modal__header {
   display: flex;
-  align-items: center;
-  grid-gap: 30px;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  grid-gap: 15px;
 }
 
 .modal__title {
-  margin-bottom: 10px;
   color: var(--black-color);
   font-size: 18px;
   font-weight: 700;
@@ -360,7 +360,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  grid-gap: 10px;
+  grid-gap: 5px;
   font-size: 16px;
 }
 
@@ -370,6 +370,7 @@ body {
 }
 
 .modal__input {
+  margin-bottom: 15px;
   padding-bottom: 5px;
   color: var(--black-color);
   font-weight: bold;
@@ -423,9 +424,22 @@ body {
   background-color: var(--firm-color);
 }
 
+.modal__form-select-content {
+  display: flex;
+  align-items: center;
+}
+
+.modal__form-select-content:not(:last-child) {
+  margin-bottom: 15px;
+}
+
 .modal__select {
-  font-size: 16px;
+  padding: 10px 12px;
+  width: 123px;
+  height: 37px;
+  font-size: 12px;
   color: var(--black-color);
+  background-color: var(--select-grey-color);
 }
 
 .modal__option_hide {
@@ -433,7 +447,13 @@ body {
 }
 
 .modal__select-input {
-  font-size: 16px;
+  width: 267px;
+  height: 37px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--black-color);
 }
 
@@ -444,4 +464,18 @@ body {
   padding: 5px;
   font-size: 16px;
   color: var(--black-color);
+}
+
+.modal__star {
+  color: var(--firm-color);
+  font-size: 10px;
+}
+
+.modal__select-delete-button {
+  width: 27px;
+  height: 37px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
+  background-image: url(../img/icons/delete-input-cross.svg);
 }
