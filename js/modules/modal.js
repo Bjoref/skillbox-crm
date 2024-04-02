@@ -13,15 +13,19 @@ export const showModal = (e) => {
   modal.classList.add("d-block");
   const submitButton = document.querySelector(".modal__submit-button");
 
-  if (e.target.getAttribute("id") == "addClient") {
+  if (e && e.target.getAttribute("id") == "addClient") {
     modalTitle.innerText = "Добавить клиента";
     submitButton.textContent = "Добавить";
     editForm.addEventListener("submit", updateOrAddUser);
     submitButton.setAttribute("data-submit", "add");
     createModalContent();
-  } else if (e.target.classList.contains("section-table__table-edit")) {
+  } else {
     modalTitle.innerText = "Изменить данные";
-    userId = e.target.getAttribute("data-id");
+    if (Number(window.location.hash.slice(1))) {
+      userId = Number(window.location.hash.slice(1));
+    } else {
+      userId = e.target.getAttribute("data-id");
+    }
     getUserData(`http://localhost:3000/api/clients/${userId}`).then(
       (editUser) => {
         editForm.setAttribute("data-id", userId);
@@ -51,11 +55,12 @@ export const showModal = (e) => {
   }
 
   let shownInterval = setInterval(() => {
-    if(document.querySelector('.modal__invalid-field')) {
-      clearInterval(shownInterval)
+    window.location.hash = userId;
+    if (document.querySelector(".modal__invalid-field")) {
+      clearInterval(shownInterval);
       modal.classList.add("modal_show");
     }
-  }, 200)
+  }, 200);
 };
 
 const showButton = document.getElementById("addClient");
@@ -306,6 +311,11 @@ const closeModal = () => {
   modal.classList.remove("d-block");
   modal.classList.remove("modal_show");
   removeModalContent();
+  document.querySelector(".modal__id").textContent = '';
+  userId = ''
+  if (Number(window.location.hash.slice(1))) {
+    window.location.hash = "";
+  }
 };
 
 const addNewSelectInput = (data = null) => {
@@ -399,3 +409,7 @@ const removeError = (e) => {
 };
 
 closeModalButton.addEventListener("click", closeModal);
+
+if (window.location.hash) {
+  showModal();
+}
