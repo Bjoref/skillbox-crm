@@ -6,9 +6,11 @@ export const showDeleteModal = (id, modal, modalDelete) => {
     background.classList.add("d-block");
     modalDelete.classList.add("d-block");
     modalDelete.setAttribute("data-create-in-list", "true");
+    modalDelete.classList.add("modal_show");
   } else {
     modal.classList.remove("d-block");
     modalDelete.classList.add("d-block");
+    modal.classList.add("modal_show");
   }
 
   modalDeleteButton.addEventListener("click", (e) => {

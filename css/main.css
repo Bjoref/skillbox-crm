@@ -374,6 +374,11 @@ body {
   font-weight: 700;
 }
 
+.modal__title_delete {
+  margin-bottom: 15px;
+}
+
+
 .modal__form {
   display: flex;
   flex-direction: column;

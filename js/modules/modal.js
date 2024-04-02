@@ -55,7 +55,9 @@ export const showModal = (e) => {
   }
 
   let shownInterval = setInterval(() => {
-    window.location.hash = userId;
+    if(userId) {
+      window.location.hash = userId;
+    }
     if (document.querySelector(".modal__invalid-field")) {
       clearInterval(shownInterval);
       modal.classList.add("modal_show");
@@ -147,6 +149,7 @@ const updateOrAddUser = (e) => {
   }
 
   let contactsArray = [];
+  let validContacts = true;
 
   document.querySelectorAll(".modal__select-input").forEach((option) => {
     if (e.submitter.getAttribute("data-submit") === "edit") {
@@ -164,7 +167,16 @@ const updateOrAddUser = (e) => {
 
   obj.contacts = contactsArray;
 
-  if (!obj.surname || !obj.name) {
+  document.querySelectorAll('.modal__select-input').forEach((input) => {
+    if(!input.value) {
+      input.classList.add("is-invalid")
+      validContacts = false
+    } else {
+      validContacts = true
+    }
+  })
+
+  if (!obj.surname || !obj.name || !validContacts) {
     let invalidField = document.querySelector(".modal__invalid-field");
     invalidField.classList.add("d-inline-block");
     if (!obj.surname) {
@@ -173,7 +185,7 @@ const updateOrAddUser = (e) => {
     if (!obj.name) {
       document.querySelector("#name").classList.add("is-invalid");
     }
-    if (!obj.surname && !obj.name) {
+    if (!obj.surname && !obj.name && validContacts) {
       invalidField.textContent =
         'Ошибка: Поля "Фамилия" и "Имя" обязательны для заполнения';
     } else if (!obj.surname) {
@@ -182,6 +194,9 @@ const updateOrAddUser = (e) => {
     } else if (!obj.name) {
       invalidField.textContent =
         'Ошибка: Поле "Имя" обязательны для заполнения';
+    } else if (obj.surname && obj.name && !validContacts) {
+      invalidField.textContent =
+        'Ошибка: Полностью заполните контакты';
     }
   } else {
     if (e.submitter.getAttribute("data-submit") === "edit") {
@@ -250,7 +265,6 @@ const createModalContent = () => {
   inputPatronymic.setAttribute("name", "patronymic");
   inputPatronymic.setAttribute("autocomplete", "off");
   inputPatronymic.addEventListener("input", removeError);
-
   const labelPatronymic = label.cloneNode(true);
   labelPatronymic.setAttribute("for", "patronymic");
   labelPatronymic.textContent = "Отчество";
@@ -314,7 +328,8 @@ const closeModal = () => {
   document.querySelector(".modal__id").textContent = '';
   userId = ''
   if (Number(window.location.hash.slice(1))) {
-    window.location.hash = "";
+    var noHashURL = window.location.href.replace(/#.*$/, '');
+    window.history.replaceState('', document.title, noHashURL) 
   }
 };
 
@@ -351,6 +366,7 @@ const addNewSelectInput = (data = null) => {
       select.append(optionHtmlClone);
     });
     let inputClone = input.cloneNode(true);
+    inputClone.addEventListener("input", removeError);
     if (data) {
       inputClone.value = data.value;
       inputClone.setAttribute("data-type", data.type);
