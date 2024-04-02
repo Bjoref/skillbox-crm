@@ -151,23 +151,43 @@ const updateOrAddUser = (e) => {
 
   obj.contacts = contactsArray;
 
-  if (e.submitter.getAttribute("data-submit") === "edit") {
-    fetch(
-      `http://localhost:3000/api/clients/${e.target.getAttribute("data-id")}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(obj),
-      }
-    );
+  if (!obj.surname || !obj.name) {
+    let invalidField = document.querySelector(".modal__invalid-field");
+    invalidField.classList.add("d-inline-block");
+    if (!obj.surname) {
+      document.querySelector("#surname").classList.add("is-invalid");
+    }
+    if (!obj.name) {
+      document.querySelector("#name").classList.add("is-invalid");
+    }
+    if (!obj.surname && !obj.name) {
+      invalidField.textContent =
+        'Ошибка: Поля "Фамилия" и "Имя" обязательны для заполнения';
+    } else if (!obj.surname) {
+      invalidField.textContent =
+        'Ошибка: Поле "Фамилия" обязательны для заполнения';
+    } else if (!obj.name) {
+      invalidField.textContent =
+        'Ошибка: Поле "Имя" обязательны для заполнения';
+    }
   } else {
-    const response = fetch("http://localhost:3000/api/clients", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(obj),
-    });
-    return response.json();
+    if (e.submitter.getAttribute("data-submit") === "edit") {
+      fetch(
+        `http://localhost:3000/api/clients/${e.target.getAttribute("data-id")}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(obj),
+        }
+      );
+    } else {
+      const response = fetch("http://localhost:3000/api/clients", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      });
+    }
   }
 };
 
@@ -184,10 +204,14 @@ const createModalContent = () => {
   addContactBtn.classList.add("modal__add-contact-button");
   addContactBtn.textContent = "Добавить Контакт";
 
+  const modalInvalidField = document.createElement("button");
+  modalInvalidField.classList.add("modal__invalid-field");
+
   const inputSurname = input.cloneNode(true);
   inputSurname.setAttribute("id", "surname");
   inputSurname.setAttribute("name", "surname");
   inputSurname.setAttribute("autocomplete", "family-name");
+  inputSurname.addEventListener("input", removeError);
 
   const labelSurname = label.cloneNode(true);
   labelSurname.setAttribute("for", "surname");
@@ -198,6 +222,7 @@ const createModalContent = () => {
   inputName.setAttribute("id", "name");
   inputName.setAttribute("name", "name");
   inputName.setAttribute("autocomplete", "given-name");
+  inputName.addEventListener("input", removeError);
 
   const labelName = label.cloneNode(true);
   labelName.setAttribute("for", "name");
@@ -208,16 +233,21 @@ const createModalContent = () => {
   inputPatronymic.setAttribute("id", "patronymic");
   inputPatronymic.setAttribute("name", "patronymic");
   inputPatronymic.setAttribute("autocomplete", "off");
+  inputPatronymic.addEventListener("input", removeError);
 
   const labelPatronymic = label.cloneNode(true);
   labelPatronymic.setAttribute("for", "patronymic");
   labelPatronymic.textContent = "Отчество";
-  labelPatronymic.append(span.cloneNode(true));
 
   addContactBtn.addEventListener("click", () => addNewSelectInput(null));
 
   editForm.insertBefore(
     addContactBtn,
+    document.querySelector(".modal__submit-button")
+  );
+
+  editForm.insertBefore(
+    modalInvalidField,
     document.querySelector(".modal__submit-button")
   );
   editForm.prepend(inputPatronymic);
@@ -235,6 +265,7 @@ const removeModalContent = () => {
   removeClassElement(".modal__input");
   removeClassElement(".modal__form-select-content");
   removeClassElement(".modal__add-contact-button");
+  removeClassElement(".modal__invalid-field");
 };
 
 const removeClassElement = (elementsClass) => {
@@ -314,4 +345,11 @@ const addNewSelectInput = (data = null) => {
 
 const removeInput = (e) => {
   e.target.parentNode.remove();
+};
+
+const removeError = (e) => {
+  document
+    .querySelector(".modal__invalid-field")
+    .classList.remove("d-inline-block");
+  e.target.classList.remove("is-invalid");
 };

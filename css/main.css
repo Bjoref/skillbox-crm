@@ -353,10 +353,6 @@ body {
   overflow-y: hidden;
 }
 
-.d-block {
-  display: block;
-}
-
 .modal__header {
   display: flex;
   align-items: flex-end;
@@ -472,6 +468,7 @@ body {
 }
 
 .modal__add-contact-button {
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -496,4 +493,24 @@ body {
   background-position: center;
   background-size: 12px 12px;
   background-image: url(../img/icons/delete-input-cross.svg);
+}
+
+.is-invalid {
+  outline: 1px solid var(--red-color);
+  border-bottom: none;
+}
+
+.modal__invalid-field {
+  display: none;
+  margin-bottom: 15px;
+  font-size: 10px;
+  color: var(--red-color);
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.d-block {
+  display: block;
 }
