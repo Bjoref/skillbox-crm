@@ -12,12 +12,15 @@ import {
 } from "./modules/filterId.js";
 
 let clientsData;
+const tableLoader = document.querySelector('.loader__block_table')
 
 const fillingTable = (data, filterBy, type) => {
+  tableLoader.style.display = 'flex'
   clearTable();
   filterBy(data, type).forEach((user) => {
     fillTable(user);
   });
+  tableLoader.style.display = 'none'
 };
 clearTable();
 

@@ -8,6 +8,7 @@ export const modalEvents = () => {
 export { background, modalDelete };
 
 export const showModal = (e) => {
+  document.querySelector('.loader__block_modal').style.display = 'flex'
   document.querySelector("body").classList.add("hide-overflow");
   background.classList.add("d-block");
   modal.classList.add("d-block");
@@ -54,13 +55,14 @@ export const showModal = (e) => {
     );
   }
 
+  modal.classList.add("modal_show");
+  if(userId) {
+    window.location.hash = userId;
+  }
   let shownInterval = setInterval(() => {
-    if(userId) {
-      window.location.hash = userId;
-    }
     if (document.querySelector(".modal__invalid-field")) {
+      document.querySelector('.loader__block_modal').style.display = 'none'
       clearInterval(shownInterval);
-      modal.classList.add("modal_show");
     }
   }, 200);
 };

@@ -65,6 +65,9 @@ body {
 .loader__block {
   display: flex;
   align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   justify-content: center;
   z-index: 9999;
   position: absolute;
@@ -75,7 +78,7 @@ body {
 .loader__ring {
   display: inline-block;
   position: relative;
-  width: 36;
+  width: 36px;
   height: 36px;
 }
 .loader__ring div {
@@ -158,6 +161,7 @@ body {
 
 /* Section-table */
 .section-table {
+  position: relative;
   margin-bottom: 40px;
 }
 
@@ -335,6 +339,7 @@ body {
 }
 
 .modal {
+  position: relative;
   opacity: 0;
   display: none;
   width: 450px;
@@ -349,7 +354,7 @@ body {
   margin-right: -50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  transition: opacity .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .modal_show {
@@ -377,7 +382,6 @@ body {
 .modal__title_delete {
   margin-bottom: 15px;
 }
-
 
 .modal__form {
   display: flex;
@@ -465,8 +469,8 @@ body {
   font-size: 12px;
   color: var(--black-color);
   border: 1px solid var(--grey-color);
-  background-color: #E7E5EB;
-  appearance: none; 
+  background-color: #e7e5eb;
+  appearance: none;
   overflow: hidden;
   background: url(../img/icons/caret-down.svg) no-repeat 73px;
   transition: background 0.2s ease-in-out;
@@ -482,7 +486,7 @@ body {
 }
 
 .modal__select-input {
-  width:69%;
+  width: 69%;
   height: 37px;
   padding-top: 8px;
   padding-bottom: 8px;
