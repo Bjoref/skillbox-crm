@@ -32,7 +32,12 @@
     <div class="background" id="background">
       <div class="modal" id="modal">
         <div class="loader__block loader__block_modal">
-          <div class="loader__ring"><div></div><div></div><div></div><div></div></div>
+          <div class="loader__ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
         <div class="modal__close-header">
           <button class="modal__close-modal" type="button">
@@ -91,19 +96,28 @@
             alt="Логотип"
           />
         </a>
-        <input
-          type="text"
-          class="header__search"
-          autocomplete="off"
-          placeholder="Введите запрос"
-          id="header__search"
-        />
+        <div class="header__search-block">
+          <input
+            type="text"
+            class="header__search"
+            autocomplete="off"
+            placeholder="Введите запрос"
+            id="header__search"
+          />
+          <div class="header__search-content">
+          </div>
+        </div>
       </div>
     </header>
 
     <section class="section-table">
       <div class="loader__block loader__block_table">
-        <div class="loader__ring"><div></div><div></div><div></div><div></div></div>
+        <div class="loader__ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
       <div class="container section-table__container">
         <h1 class="section-table__title">Клиенты</h1>

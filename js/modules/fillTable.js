@@ -26,6 +26,7 @@ const divButton = document.createElement("div");
 export const fillTable = (user) => {
   //Изначальное заполнение таблицы при загрузке
   const trClone = tr.cloneNode(true);
+  trClone.setAttribute('data-id', user.id);
 
   //ID
   const tdIdClone = td.cloneNode(true);
