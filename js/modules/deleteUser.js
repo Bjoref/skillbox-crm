@@ -2,7 +2,7 @@ import { background } from "./modal.js";
 
 export const showDeleteModal = (id, modal, modalDelete) => {
   if (!background.classList.contains("d-block")) {
-    document.querySelector("body").classList.add("hide-overflow-x");
+    document.querySelector("body").classList.add("hide-overflow");
     background.classList.add("d-block");
     modalDelete.classList.add("d-block");
     modalDelete.setAttribute("data-create-in-list", "true");

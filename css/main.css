@@ -348,8 +348,9 @@ body {
   z-index: 2;
 }
 
-.hide-overflow-x {
+.hide-overflow {
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .d-block {
@@ -476,6 +477,10 @@ body {
   justify-content: center;
   padding: 5px;
   font-size: 16px;
+  background-image: url(../img/icons/plus.svg);
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: 28%;
   color: var(--black-color);
 }
 

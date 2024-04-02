@@ -8,7 +8,7 @@ export const modalEvents = () => {
 export { background, modalDelete };
 
 export const showModal = (e) => {
-  document.querySelector("body").classList.add("hide-overflow-x");
+  document.querySelector("body").classList.add("hide-overflow");
   background.classList.add("d-block");
   modal.classList.add("d-block");
   const submitButton = document.querySelector(".modal__submit-button");
@@ -61,9 +61,7 @@ const deleteButton = document.querySelector(".modal__delete-button");
 const cancelDeleteButton = document.querySelector(
   ".modal-delete__button-cancel"
 );
-const addSelectInputButton = document.querySelector(
-  ".modal__add-contact-button"
-);
+
 const addNewOptions = [
   {
     value: "Телефон",
@@ -173,7 +171,7 @@ const updateOrAddUser = (e) => {
   }
 };
 
-const createModalContent = (addNew) => {
+const createModalContent = () => {
   const input = document.createElement("input");
   input.classList.add("modal__input");
   const label = document.createElement("label");
@@ -182,9 +180,9 @@ const createModalContent = (addNew) => {
   span.classList.add("modal__star");
   span.textContent = "*";
 
-  addSelectInputButton.addEventListener("click", () => {
-    addNewSelectInput(null);
-  });
+  const addContactBtn = document.createElement("button");
+  addContactBtn.classList.add("modal__add-contact-button");
+  addContactBtn.textContent = "Добавить Контакт";
 
   const inputSurname = input.cloneNode(true);
   inputSurname.setAttribute("id", "surname");
@@ -216,6 +214,12 @@ const createModalContent = (addNew) => {
   labelPatronymic.textContent = "Отчество";
   labelPatronymic.append(span.cloneNode(true));
 
+  addContactBtn.addEventListener("click", () => addNewSelectInput(null));
+
+  editForm.insertBefore(
+    addContactBtn,
+    document.querySelector(".modal__submit-button")
+  );
   editForm.prepend(inputPatronymic);
   editForm.prepend(labelPatronymic);
 
@@ -227,21 +231,22 @@ const createModalContent = (addNew) => {
 };
 
 const removeModalContent = () => {
-  document.querySelectorAll(".modal__label").forEach((label) => {
-    label.remove();
-  });
-  document.querySelectorAll(".modal__input").forEach((label) => {
-    label.remove();
-  });
-  document.querySelectorAll(".modal__form-select-content").forEach((div) => {
-    div.remove();
+  removeClassElement(".modal__label");
+  removeClassElement(".modal__input");
+  removeClassElement(".modal__form-select-content");
+  removeClassElement(".modal__add-contact-button");
+};
+
+const removeClassElement = (elementsClass) => {
+  document.querySelectorAll(elementsClass).forEach((element) => {
+    element.remove();
   });
 };
 
 const removeApproveDeleteModal = () => {
   modalDelete.classList.remove("d-block");
   modalDelete.removeAttribute("data-create-in-list");
-  document.querySelector("body").classList.remove("hide-overflow-x");
+  document.querySelector("body").classList.remove("hide-overflow");
   background.classList.remove("d-block");
 };
 
@@ -251,7 +256,7 @@ const checkoutToModal = () => {
 };
 
 const closeModal = () => {
-  document.querySelector("body").classList.remove("hide-overflow-x");
+  document.querySelector("body").classList.remove("hide-overflow");
   background.classList.remove("d-block");
   modal.classList.remove("d-block");
   removeModalContent();
@@ -268,8 +273,8 @@ const addNewSelectInput = (data = null) => {
   select.classList.add("modal__select");
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("modal__select-delete-button");
-  deleteButton.setAttribute('type', 'button');
-  deleteButton.addEventListener('click', removeInput)
+  deleteButton.setAttribute("type", "button");
+  deleteButton.addEventListener("click", removeInput);
   const optionHtml = document.createElement("option");
 
   addNewOptions.forEach((option) => {
@@ -308,5 +313,5 @@ const addNewSelectInput = (data = null) => {
 };
 
 const removeInput = (e) => {
-  e.target.parentNode.remove()
-}
+  e.target.parentNode.remove();
+};
