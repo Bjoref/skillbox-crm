@@ -91,7 +91,7 @@ export const fillTable = (user) => {
         "data-tooltip",
         `Facebook: ${contact.value}`
       );
-    } else if (contact.type === "Vkontakte") {
+    } else if (contact.type === "Vk") {
       buttonContactsClone.classList.add("section-table__contact-button_vk");
       buttonContactsClone.setAttribute(
         "data-tooltip",

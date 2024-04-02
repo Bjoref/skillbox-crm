@@ -49,6 +49,13 @@ export const showModal = (e) => {
       }
     );
   }
+
+  let shownInterval = setInterval(() => {
+    if(document.querySelector('.modal__invalid-field')) {
+      clearInterval(shownInterval)
+      modal.classList.add("modal_show");
+    }
+  }, 200)
 };
 
 const showButton = document.getElementById("addClient");
@@ -61,6 +68,7 @@ const deleteButton = document.querySelector(".modal__delete-button");
 const cancelDeleteButton = document.querySelector(
   ".modal-delete__button-cancel"
 );
+const closeModalButton = document.querySelector(".modal__close-modal");
 
 const addNewOptions = [
   {
@@ -180,7 +188,7 @@ const updateOrAddUser = (e) => {
         }
       );
     } else {
-      const response = fetch("http://localhost:3000/api/clients", {
+      fetch("http://localhost:3000/api/clients", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -192,6 +200,8 @@ const updateOrAddUser = (e) => {
 };
 
 const createModalContent = () => {
+  const div = document.createElement("div");
+  div.classList.add("modal__select-input-wrapper");
   const input = document.createElement("input");
   input.classList.add("modal__input");
   const label = document.createElement("label");
@@ -202,6 +212,7 @@ const createModalContent = () => {
 
   const addContactBtn = document.createElement("button");
   addContactBtn.classList.add("modal__add-contact-button");
+  addContactBtn.setAttribute("type", "button");
   addContactBtn.textContent = "Добавить Контакт";
 
   const modalInvalidField = document.createElement("button");
@@ -250,6 +261,8 @@ const createModalContent = () => {
     modalInvalidField,
     document.querySelector(".modal__submit-button")
   );
+  editForm.prepend(div);
+
   editForm.prepend(inputPatronymic);
   editForm.prepend(labelPatronymic);
 
@@ -266,6 +279,7 @@ const removeModalContent = () => {
   removeClassElement(".modal__form-select-content");
   removeClassElement(".modal__add-contact-button");
   removeClassElement(".modal__invalid-field");
+  removeClassElement(".modal__select-input-wrapper");
 };
 
 const removeClassElement = (elementsClass) => {
@@ -290,61 +304,91 @@ const closeModal = () => {
   document.querySelector("body").classList.remove("hide-overflow");
   background.classList.remove("d-block");
   modal.classList.remove("d-block");
+  modal.classList.remove("modal_show");
   removeModalContent();
 };
 
 const addNewSelectInput = (data = null) => {
-  const div = document.createElement("div");
-  div.classList.add("modal__form-select-content");
-  const select = document.createElement("select");
-  const input = document.createElement("input");
-  input.setAttribute("type", "text");
-  input.classList.add("modal__select-input");
-  input.placeholder = "Введите данные контакта";
-  select.classList.add("modal__select");
-  const deleteButton = document.createElement("button");
-  deleteButton.classList.add("modal__select-delete-button");
-  deleteButton.setAttribute("type", "button");
-  deleteButton.addEventListener("click", removeInput);
-  const optionHtml = document.createElement("option");
+  if (document.querySelectorAll(".modal__form-select-content").length < 10) {
+    const wrapper = document.querySelector(".modal__select-input-wrapper");
+    const div = document.createElement("div");
+    div.classList.add("modal__form-select-content");
+    const select = document.createElement("select");
+    const input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.classList.add("modal__select-input");
+    input.placeholder = "Введите данные контакта";
+    select.classList.add("modal__select");
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("modal__select-delete-button");
+    deleteButton.setAttribute("type", "button");
+    deleteButton.addEventListener("click", removeInput);
+    const optionHtml = document.createElement("option");
 
-  addNewOptions.forEach((option) => {
-    let optionHtmlClone = optionHtml.cloneNode(true);
-    if (data && data.type === option.value) {
-      optionHtmlClone.setAttribute("selected", true);
-      optionHtmlClone.value = data.type;
-      optionHtmlClone.innerText = data.type;
-    } else {
+    addNewOptions.forEach((option) => {
+      let optionHtmlClone = optionHtml.cloneNode(true);
+      if (data && data.type === option.value) {
+        optionHtmlClone.setAttribute("selected", true);
+        optionHtmlClone.value = data.type;
+        optionHtmlClone.innerText = data.type;
+      } else {
+        select.setAttribute("name", "select");
+        optionHtmlClone.value = option.value;
+        optionHtmlClone.innerText = option.value;
+      }
+      optionHtmlClone.setAttribute("class", option.class);
+
+      select.append(optionHtmlClone);
+    });
+    let inputClone = input.cloneNode(true);
+    if (data) {
+      inputClone.value = data.value;
+      inputClone.setAttribute("data-type", data.type);
+      inputClone.setAttribute("autocomplete", "off");
+      select.setAttribute("autocomplete", "off");
       select.setAttribute("name", "select");
-      optionHtmlClone.value = option.value;
-      optionHtmlClone.innerText = option.value;
     }
-    optionHtmlClone.setAttribute("class", option.class);
 
-    select.append(optionHtmlClone);
-  });
-  let inputClone = input.cloneNode(true);
-  if (data) {
-    inputClone.value = data.value;
-    inputClone.setAttribute("data-type", data.type);
-    inputClone.setAttribute("autocomplete", "off");
-    select.setAttribute("autocomplete", "off");
-    select.setAttribute("name", "select");
+    select.addEventListener("change", (e) => {
+      select.nextElementSibling.setAttribute("data-type", select.value);
+      select.blur();
+    });
+
+    inputClone.setAttribute("name", "contact_input");
+
+    div.append(select);
+    div.append(inputClone);
+    div.append(deleteButton);
+
+    wrapper.append(div);
+
+    if (wrapper.offsetHeight >= 245) {
+      wrapper.classList.add("yScroll");
+    }
+
+    if (document.querySelectorAll(".modal__form-select-content").length == 10) {
+      document
+        .querySelector(".modal__add-contact-button")
+        .classList.add("inactive");
+    }
+  } else {
+    document
+      .querySelector(".modal__add-contact-button")
+      .classList.add("inactive");
   }
-  inputClone.setAttribute("name", "contact_input");
-
-  div.append(select);
-  div.append(inputClone);
-  div.append(deleteButton);
-
-  editForm.insertBefore(
-    div,
-    document.querySelector(".modal__add-contact-button")
-  );
 };
 
 const removeInput = (e) => {
   e.target.parentNode.remove();
+  if (document.querySelectorAll(".modal__form-select-content").length < 10) {
+    document
+      .querySelector(".modal__add-contact-button")
+      .classList.remove("inactive");
+  }
+  const wrapper = document.querySelector(".modal__select-input-wrapper");
+  if (wrapper.offsetHeight < 245) {
+    wrapper.classList.remove("yScroll");
+  }
 };
 
 const removeError = (e) => {
@@ -353,3 +397,5 @@ const removeError = (e) => {
     .classList.remove("d-inline-block");
   e.target.classList.remove("is-invalid");
 };
+
+closeModalButton.addEventListener("click", closeModal);
