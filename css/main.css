@@ -184,8 +184,14 @@ body {
 .section-table__table-th_filter.filter-up {
   color: var(--firm-color);
 }
+
+.section-table__table-th_filter.filter-down > .section-table__svg,
+.section-table__table-th_filter.filter-up > .section-table__svg {
+  opacity: 1;
+}
 .section-table__svg {
-  transition: transform .2s ease-in-out;
+  opacity: 0;
+  transition: transform .2s ease-in-out, opacity .2s ease-in-out;
 }
 .section-table__table-th_filter.filter-down > .section-table__svg {
   transform: rotate(180deg);

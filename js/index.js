@@ -2,7 +2,7 @@ import { fillTable } from "./modules/fillTable.js";
 import { clearTable } from "./modules/clearTable.js";
 import { tooltipsInit } from "./modules/tooltips.js";
 import { modalEvents } from "./modules/modal.js";
-import { filterBy, idFilterButton, fioFilterButton } from "./modules/filterId.js";
+import { filterBy, idFilterButton, fioFilterButton, createdAtFilterButton, updatedAtFilterButton } from "./modules/filterId.js";
 
 const postData = async (url = "", data = {}) => {
   const response = await fetch(url, {
@@ -39,6 +39,15 @@ idFilterButton.addEventListener("click", () => {
 fioFilterButton.addEventListener("click", () => {
   fillingTable(clientsData, filterBy, 'fio');
 });
+
+createdAtFilterButton.addEventListener("click", () => {
+  fillingTable(clientsData, filterBy, 'createdAt');
+});
+
+updatedAtFilterButton.addEventListener("click", () => {
+  fillingTable(clientsData, filterBy, 'updatedAt');
+});
+
 
 tooltipsInit();
 modalEvents();

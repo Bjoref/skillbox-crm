@@ -124,7 +124,6 @@ function getUserData(url) {
 }
 
 const updateOrAddUser = (e) => {
-  console.log(e);
   e.preventDefault();
   let obj = {};
   obj.id = e.target.getAttribute("data-id");

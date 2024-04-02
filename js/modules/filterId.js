@@ -33,6 +33,30 @@ export const filterBy = (data, type) => {
       }
       return data;
       break;
+    case "createdAt":
+      if (createdAtFilterButton.classList.contains("filter-up")) {
+        removeFilterClass();
+        data.sort((a, b) => sortDate(a.createdAt, b.createdAt, "down"));
+        createdAtFilterButton.classList.add("filter-down");
+      } else {
+        removeFilterClass();
+        data.sort((a, b) => sortDate(a.createdAt, b.createdAt, "up"));
+        createdAtFilterButton.classList.add("filter-up");
+      }
+      return data;
+      break;
+    case "updatedAt":
+      if (updatedAtFilterButton.classList.contains("filter-up")) {
+        removeFilterClass();
+        data.sort((a, b) => sortDate(a.updatedAt, b.updatedAt, "down"));
+        updatedAtFilterButton.classList.add("filter-down");
+      } else {
+        removeFilterClass();
+        data.sort((a, b) => sortDate(a.updatedAt, b.updatedAt, "up"));
+        updatedAtFilterButton.classList.add("filter-up");
+      }
+      return data;
+      break;
   }
 };
 
@@ -42,6 +66,12 @@ export const idFilterButton = document.querySelector(
 export const fioFilterButton = document.querySelector(
   ".section-table__fio-button"
 );
+export const createdAtFilterButton = document.querySelector(
+  ".section-table__date"
+);
+export const updatedAtFilterButton = document.querySelector(
+  ".section-table__last-update"
+);
 
 const removeFilterClass = () => {
   document.querySelectorAll(".filter-up").forEach((item) => {
@@ -50,4 +80,12 @@ const removeFilterClass = () => {
   document.querySelectorAll(".filter-down").forEach((item) => {
     item.classList.remove("filter-down");
   });
+};
+
+const sortDate = (a, b, type) => {
+  if (type === "up") {
+    return new Date(a) - new Date(b);
+  } else {
+    return new Date(b) - new Date(a);
+  }
 };
