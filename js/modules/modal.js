@@ -431,3 +431,9 @@ closeModalButton.addEventListener("click", closeModal);
 if (window.location.hash) {
   showModal();
 }
+
+window.addEventListener("keydown", (e) => {
+  if(e.keyCode === 27) {
+    closeModal();
+  }
+})

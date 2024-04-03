@@ -10,7 +10,7 @@ export const showDeleteModal = (id, modal, modalDelete) => {
   } else {
     modal.classList.remove("d-block");
     modalDelete.classList.add("d-block");
-    modal.classList.add("modal_show");
+    modalDelete.classList.add("modal_show");
   }
 
   modalDeleteButton.addEventListener("click", (e) => {
